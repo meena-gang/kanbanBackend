@@ -56,15 +56,13 @@ const deleteTodoHandler = async(req,res) => {
 
 const updateTodoHandler = async(req,res) => {
     const{todoId} = req.params;
-    const{task, status, user_id, role} = req.body;
+    const{status, user_id, role} = req.body;
     try{
-            const todo = await TodoModel.findOne({_id:todoId});
-            if(todo.user_id == user_id){
-                await TodoModel.updateOne({_id:todoId},{$set:{task,status}});
+               const todo = await TodoModel.findOne({_id:todoId});
+           
+                await TodoModel.updateOne({_id:todoId},{$set:{status}});
                 res.status(200).send({"msg": "todo updated successfully"});
-            }else{
-                res.status(401).send({"msg": "Unauthorized"});
-            }
+            
     }catch(err){
         res.status(400).send({"msg": err.message});
     }
